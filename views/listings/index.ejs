@@ -1,23 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>wanderlust</title>
-</head>
+<% layout("/layouts/boilerplate") %>
 <body>
     <h2>All Listings</h2>
-    <form action="/listings" method="GET">
-        <input type="text" name="search" placeholder="Search listings...">
-        <button type="submit">Search</button>
+    <!-- <form action="/listings/new" method="GET">
         <button>Create New Listing</button>
-    </form>
+    </form> -->
     <ul>
         <% listings.forEach(function(listing) { %>
             <li><a href="/listings/<%= listing._id %>"><%= listing.title %></a></li>
         
         <% }); %>
     </ul>
-
 </body>
-</html>
