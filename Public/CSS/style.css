@@ -106,3 +106,10 @@ body {
     opacity: 0.2;
     transition: 0.3s;
  }
+
+    .show-img {
+        width: 70% !important;
+        border-radius: 2rem !important;
+        object-fit: cover !important;
+        margin-bottom: 1rem;
+    }
