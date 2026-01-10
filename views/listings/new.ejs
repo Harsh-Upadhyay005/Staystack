@@ -2,7 +2,7 @@
 <div class="row mt-3">
     <div class="col-md-8 offset-md-2">
 <h2>Create New Listing</h2>
-<form action="/listings" method="POST">
+<form action="/listings" method="POST" class="needs-validation" novalidate>
   <div class="mb-3">
     <label for="title" class="form-label">Title:</label>
     <input
@@ -11,7 +11,10 @@
       class="form-control"
       name="listing[title]"
       required
+      
     />
+    <div class="valid-feedback">Looks good!</div>
+    <div class="invalid-feedback">Please provide a title.</div>
   </div>
   <div class="mb-3">
     <label for="description" class="form-label">Description:</label>
@@ -20,8 +23,11 @@
       placeholder="Enter Description"
       name="listing[description]"
       required
+      
     ></textarea
     >
+    <div class="valid-feedback">Looks good!</div>
+    <div class="invalid-feedback">Please provide a description.</div>
   </div>
   
   
@@ -33,7 +39,10 @@
       class="form-control"
       name="listing[location]"
       required
+      
     />
+    <div class="valid-feedback">Looks good!</div>
+    <div class="invalid-feedback">Please provide a location.</div>
   </div>
   <div class="mb-3">
     <label for="imageUrl" class="form-label">Image URL:</label>
@@ -53,7 +62,10 @@
       class="form-control"
       name="listing[price]"
       required
+      
     />
+    <div class="valid-feedback">Looks good!</div>
+    <div class="invalid-feedback">Please Enter a valid Price.</div>
   </div>
   <div class="mb-3 col-md-6">
     <label for="country" class="form-label">Country:</label>
@@ -63,7 +75,10 @@
       class="form-control"
       name="listing[country]"
       required
+      
     />
+    <div class="valid-feedback">Looks good!</div>
+    <div class="invalid-feedback"> country should be valid</div>
   </div>
   </div>
   
