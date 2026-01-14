@@ -7,6 +7,7 @@ const methodOverride = require ("method-override");
 const ejsMate = require ("ejs-mate");
 const wrapAsync = require ("./utils/wrapAsync.js");
 const ExpressError = require ("./utils/ExpressError.js");
+const { listingSchema } = require ("./schema.js");
 
 
 
@@ -35,6 +36,17 @@ app.get ("/", (req, res) => {
     res.send ("Hello World");
 });
 
+const validateListing = (req, res, next) => {
+    const {error} = listingSchema.validate (req.body);
+    if (error) {
+        const msg = error.details.map (el => el.message).join (",");
+        throw new ExpressError (400, msg);
+    } else {
+        next();
+    }   
+};
+
+
 // index route to display all listings
 app.get ("/listings", wrapAsync (async (req, res) => {
     let listings = await Listing.find({});
@@ -53,10 +65,13 @@ app.get ("/listings/:id", wrapAsync (async (req, res) => {
 }));
 
 // create route to handle form submission and create new listing
-app.post ("/listings", wrapAsync (async (req, res) => {
-    if (!req.body.listing) {
-        throw new ExpressError (400, "Invalid Listing Data");
+app.post ("/listings", validateListing, wrapAsync (async (req, res) => {
+    const {error} = listingSchema.validate (req.body);
+    if (error) {
+        const msg = error.details.map (el => el.message).join (",");
+        throw new ExpressError (400, msg);
     }
+
 
     const newListing = new Listing ( req.body.listing);
     await newListing.save();
@@ -65,13 +80,13 @@ app.post ("/listings", wrapAsync (async (req, res) => {
 );
 
 // edit route to render form for editing a listing
-app.get ("/listings/:id/edit", wrapAsync (async (req, res) => {
+app.get ("/listings/:id/edit",  wrapAsync (async (req, res) => {
     let listing = await Listing.findById(req.params.id);
     res.render ("listings/edit.ejs", {listing: listing});
 }));
 
 // update route to handle form submission and update listing
-app.put ("/listings/:id", wrapAsync (async (req, res) => {
+app.put ("/listings/:id", validateListing, wrapAsync (async (req, res) => {
     if (!req.body.listing) {
         throw new ExpressError (400, "Invalid Listing Data");
     }
